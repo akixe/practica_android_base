@@ -1,6 +1,8 @@
-package info.akixe.komanda;
+package info.akixe.komanda.model;
 
 import java.util.ArrayList;
+
+import info.akixe.komanda.model.Alergeno;
 
 /**
  * Created by aki on 4/12/16.

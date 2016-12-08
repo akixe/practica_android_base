@@ -1,10 +1,9 @@
-package info.akixe.komanda;
+package info.akixe.komanda.model;
 
 /**
  * Created by aki on 4/12/16.
  */
 public class Alergeno {
-
     private String mNombre;
     private int mIcono;
 
