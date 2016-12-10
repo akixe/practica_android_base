@@ -14,13 +14,15 @@ public class Plato implements Serializable {
     private Boolean mServido;
     private ArrayList<Alergeno> mAlergenos;
     private int mCantidad;
+    private float mPrecioUnitario;
 
 
-    public Plato(String nombre, String notas, Boolean servido, ArrayList<Alergeno> alergenos) {
+    public Plato(String nombre, String notas, Boolean servido, ArrayList<Alergeno> alergenos, float precioUnitario) {
         mNombre = nombre;
         mNotas = notas;
         mServido = servido;
         mAlergenos = alergenos;
+        mPrecioUnitario = precioUnitario;
         mCantidad = 1;
     }
 
@@ -72,10 +74,33 @@ public class Plato implements Serializable {
     public void addCantidad(int cantidad) {
         mCantidad = mCantidad + cantidad;
     }
+
+
+    public float getPrecioUnitario() {
+        return mPrecioUnitario;
+    }
+
+    public void setPrecioUnitario(float precioUnitario) {
+        mPrecioUnitario = precioUnitario;
+    }
+
+    //=========
+    // METHODS
+    //=========
+    public float getPrecioTotal() {
+        return mPrecioUnitario * mCantidad;
+    }
+
+
+
+    //============
+    // OVERRIDES
+    //============
     @Override
     public boolean equals(Object obj) {
             return obj instanceof Plato &&
                     mNombre.equals(((Plato)obj).mNombre);
 
     }
+
 }

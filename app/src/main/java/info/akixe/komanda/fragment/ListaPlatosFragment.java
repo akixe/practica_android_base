@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import info.akixe.komanda.R;
 import info.akixe.komanda.activity.PlatoActivity;
 import info.akixe.komanda.adapter.PlatosRecyclerViewAdapter;
-import info.akixe.komanda.model.Menu;
 import info.akixe.komanda.model.Mesa;
 import info.akixe.komanda.model.Plato;
 import info.akixe.komanda.model.Platos;

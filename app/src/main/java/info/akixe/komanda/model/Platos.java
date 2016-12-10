@@ -41,7 +41,7 @@ public class Platos implements Serializable {
 
             Plato old_plato = mPlatos.get(position);
             old_plato.setNotas(plato.getNotas());
-            old_plato.addCantidad(plato.getCantidad());
+            old_plato.setCantidad(plato.getCantidad());
 
         } else {
             mPlatos.add(plato);

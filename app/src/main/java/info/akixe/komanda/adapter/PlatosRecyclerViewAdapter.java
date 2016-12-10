@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.LinkedList;
 
 import info.akixe.komanda.R;
@@ -70,6 +71,8 @@ public class PlatosRecyclerViewAdapter extends RecyclerView.Adapter<PlatosRecycl
         private final ImageView mAlergenoHuevo;
         private final ImageView mAlergenoLacteos;
         private final ImageView mImagen;
+        private final TextView mPrecio;
+        private final TextView mCantidad;
 
 
         private View mView;
@@ -82,11 +85,17 @@ public class PlatosRecyclerViewAdapter extends RecyclerView.Adapter<PlatosRecycl
             // rellenar las vistas
             mNombre = (TextView) itemView.findViewById(R.id.txt_nombre_plato);
             mNotas = (TextView) itemView.findViewById(R.id.txt_notas_plato);
+            mPrecio = (TextView) itemView.findViewById(R.id.txt_precio_plato);
+            mCantidad = (TextView) itemView. findViewById(R.id.txt_cantidad_plato);
+
+
             mAlergenoCascara = (ImageView) itemView.findViewById(R.id.icono_alergeno_frutos_cascara);
             mAlergenoGluten= (ImageView) itemView.findViewById(R.id.icono_alergeno_gluten);
             mAlergenoHuevo = (ImageView) itemView.findViewById(R.id.icono_alergeno_huevo);
             mAlergenoLacteos = (ImageView) itemView.findViewById(R.id.icono_alergeno_lacteos);
             mImagen = (ImageView) itemView.findViewById(R.id.img_foto_plato);
+
+
 
         }
 
@@ -97,6 +106,17 @@ public class PlatosRecyclerViewAdapter extends RecyclerView.Adapter<PlatosRecycl
             if (mNotas != null){
                 mNotas.setText(plato.getNotas());
             }
+
+            if (mCantidad != null) {
+                mCantidad.setText(Integer.toString(plato.getCantidad()));
+            }
+
+            if (mPrecio != null){
+                NumberFormat format = NumberFormat.getCurrencyInstance();
+                mPrecio.setText(format.format(plato.getPrecioTotal()));
+            }
+
+
             // TODO: 7/12/16 Añadir imagen a Plato
             // TODO: 7/12/16 comprobar si tiene o no un alérgeno para convertir el icono a gris o dejarlo en color
         }

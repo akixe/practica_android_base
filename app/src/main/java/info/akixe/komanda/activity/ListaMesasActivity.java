@@ -1,5 +1,6 @@
 package info.akixe.komanda.activity;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,12 +18,14 @@ public class ListaMesasActivity extends AppCompatActivity implements ListaMesasF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_mesas);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Mesas");
 
         FragmentManager fm = getFragmentManager();
 
+        Fragment listaMesasFragment = new ListaMesasFragment();
         if (fm.findFragmentById(R.id.fragment_mesas_list) == null) {
             fm.beginTransaction()
                     .add(R.id.fragment_mesas_list, new ListaMesasFragment())
