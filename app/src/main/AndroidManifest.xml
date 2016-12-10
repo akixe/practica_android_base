@@ -21,7 +21,7 @@
         <activity android:name=".activity.PlatoActivity">
         </activity>
 
-        <activity android:name=".activity.ListaPlatos">
+        <activity android:name=".activity.ListaPlatosActivity">
         </activity>
     </application>
 

@@ -17,7 +17,7 @@ import info.akixe.komanda.model.Platos;
  * Created by aki on 9/12/16.
  */
 
-public class ListaPlatos extends AppCompatActivity {
+public class ListaPlatosActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESA = "EXTRA_MESA";
     private Mesa mMesa;

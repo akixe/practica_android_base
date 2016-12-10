@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import info.akixe.komanda.R;
 import info.akixe.komanda.fragment.ListaPlatosFragment;
 import info.akixe.komanda.model.Mesa;
-import info.akixe.komanda.model.Platos;
 
 /**
  * Created by aki on 4/12/16.
@@ -51,8 +49,8 @@ public class ListaPlatosMesaActivity extends AppCompatActivity  {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ListaPlatos.class);
-                intent.putExtra(ListaPlatos.EXTRA_MESA, mMesa);
+                Intent intent = new Intent(view.getContext(), ListaPlatosActivity.class);
+                intent.putExtra(ListaPlatosActivity.EXTRA_MESA, mMesa);
                 startActivity(intent);
             }
         });
