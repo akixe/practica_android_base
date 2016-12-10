@@ -1,26 +1,27 @@
 package info.akixe.komanda.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-
-import info.akixe.komanda.model.Alergeno;
 
 /**
  * Created by aki on 4/12/16.
  */
 
-public class Plato {
+public class Plato implements Serializable {
 
     private String mNombre;
     private String mNotas;
-    private Boolean mServida;
+    private Boolean mServido;
     private ArrayList<Alergeno> mAlergenos;
+    private int mCantidad;
 
 
-    public Plato(String nombre, String notas, Boolean servida, ArrayList<Alergeno> alergenos) {
+    public Plato(String nombre, String notas, Boolean servido, ArrayList<Alergeno> alergenos) {
         mNombre = nombre;
         mNotas = notas;
-        mServida = servida;
+        mServido = servido;
         mAlergenos = alergenos;
+        mCantidad = 1;
     }
 
     public ArrayList<Alergeno> getAlergenos() {
@@ -31,12 +32,12 @@ public class Plato {
         mAlergenos = alergenos;
     }
 
-    public Boolean getServida() {
-        return mServida;
+    public Boolean getServido() {
+        return mServido;
     }
 
-    public void setServida(Boolean servida) {
-        mServida = servida;
+    public void setServido(Boolean servido) {
+        mServido = servido;
     }
 
     public String getNotas() {
@@ -57,5 +58,24 @@ public class Plato {
 
     public void addAlergeno(Alergeno alergeno) {
         mAlergenos.add(alergeno);
+    }
+
+    public int getCantidad() {
+        return mCantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        mCantidad = cantidad;
+    }
+
+
+    public void addCantidad(int cantidad) {
+        mCantidad = mCantidad + cantidad;
+    }
+    @Override
+    public boolean equals(Object obj) {
+            return obj instanceof Plato &&
+                    mNombre.equals(((Plato)obj).mNombre);
+
     }
 }

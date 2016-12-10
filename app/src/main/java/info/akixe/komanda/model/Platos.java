@@ -1,29 +1,22 @@
 package info.akixe.komanda.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  * Created by aki on 4/12/16.
  */
 
-public class Platos {
-    private static Platos mInstance = null;
+public class Platos implements Serializable {
+
     private LinkedList<Plato> mPlatos;
 
-    public Platos() {
-        mPlatos = new LinkedList<>();
-        mPlatos.add(new Plato("plato 1", "notas plato 1 notas plato 1 notas plato 1 notas plato 1 notas plato 1 notas plato 1 notas plato 1 notas plato 1 notas plato 1 notas plato 1", false, new ArrayList<Alergeno>()));
-        mPlatos.add(new Plato("plato 2", "notas plato 2", false, new ArrayList<Alergeno>()));
-        mPlatos.add(new Plato("plato 3", "notas plato 3", false, new ArrayList<Alergeno>()));
+    public Platos(){
+        mPlatos = new LinkedList<Plato>();
     }
 
-    public static Platos getInstance(){
-        if(mInstance == null)
-        {
-            mInstance = new Platos();
-        }
-        return mInstance;
+    public Platos(LinkedList<Plato> platos) {
+        mPlatos = platos;
     }
 
     public LinkedList<Plato> getPlatos() {
@@ -41,4 +34,32 @@ public class Platos {
             return mPlatos.get(position);
         }
     }
+
+    public void addPlato(Plato plato) {
+        if (mPlatos.contains(plato)) {
+            int position = mPlatos.indexOf(plato);
+
+            Plato old_plato = mPlatos.get(position);
+            old_plato.setNotas(plato.getNotas());
+            old_plato.addCantidad(plato.getCantidad());
+
+        } else {
+            mPlatos.add(plato);
+        }
+    }
+
+    public int size(){
+        return mPlatos.size();
+    }
+
+    public boolean contains(Plato plato) {
+        return mPlatos.contains(plato);
+    }
+
+    public int getPosicionPlato(Plato plato) {
+        return mPlatos.indexOf(plato);
+    }
+
+
+
 }

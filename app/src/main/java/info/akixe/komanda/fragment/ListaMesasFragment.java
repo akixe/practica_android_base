@@ -22,7 +22,7 @@ import info.akixe.komanda.model.Plato;
  * Created by aki on 3/12/16.
  */
 
-public class MesaListFragment extends Fragment implements PlatosRecyclerViewAdapter.OnPlatoClickListener {
+public class ListaMesasFragment extends Fragment {
 
     private OnMesaSelectedListener mOnMesaSelectedListener;
 
@@ -89,21 +89,6 @@ public class MesaListFragment extends Fragment implements PlatosRecyclerViewAdap
         super.onDetach();
 
         mOnMesaSelectedListener = null;
-    }
-
-    @Override
-    public void onPlatoClick(int position, Plato plato, View view) {
-        //// TODO: 7/12/16 Implementar correctamente onPlatoClick para abrir detalle
-        // Vamos a mostrar la vista de detalle
-        //Intent intent = new Intent(getActivity(), DetailActivity.class);
-        //intent.putExtra(PlatoDetailActivity.EXTRA_FORECAST, forecast);
-
-//        startActivity(intent,
-//                ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                        getActivity(), // Contexto
-//                        view, // Vista origen común
-//                        getString(R.string.transition_to_detail) // El nombre dentro de la vista destino
-//                ).toBundle());
     }
 
     public interface OnMesaSelectedListener {

@@ -1,9 +1,11 @@
 package info.akixe.komanda.model;
 
+import java.io.Serializable;
+
 /**
  * Created by aki on 4/12/16.
  */
-public class Alergeno {
+public class Alergeno implements Serializable {
     private String mNombre;
     private int mIcono;
 

@@ -14,14 +14,13 @@ public class Mesa implements Serializable {
 
 
 
-    private LinkedList<Plato> mPlatos;
+    private Platos mPlatos;
 
     public Mesa(String nombre, Boolean ocupada) {
         mNombre = nombre;
         mOcupada = ocupada;
-        mPlatos = new LinkedList<Plato>(); // Lista vacía de platos
+        mPlatos = new Platos(); // Lista vacía de platos
     }
-
 
     public String getNombre() {
         return mNombre;
@@ -39,16 +38,32 @@ public class Mesa implements Serializable {
         this.mOcupada = ocupada;
     }
 
+    public Platos getPlatos() {
+        return mPlatos;
+    }
+
+    public void setPlatos(Platos platos) {
+        this.mPlatos = platos;
+    }
+
+
+
+
+    public void addPlato(Plato plato) {
+        mPlatos.addPlato(plato);
+    }
+
+    public int getPosicionPlato(Plato plato) {
+        if (mPlatos.contains(plato)){
+            return mPlatos.getPosicionPlato(plato);
+        } else {
+            return -1;
+        }
+
+    }
+
     @Override
     public String toString() {
         return this.getNombre();
-    }
-
-    public void addPlato(Plato plato){
-        mPlatos.add(plato);
-    }
-
-    public LinkedList<Plato> getPlatos() {
-        return mPlatos;
     }
 }
