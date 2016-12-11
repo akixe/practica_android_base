@@ -5,7 +5,7 @@ Aplicación para práctica de fundamentos de Android del master KeepCoding Bootc
 
 He cumplido con los objetivos fijados aunque no se ha terminado el trabajo opcional de hacer la interfaz compatible con tabletas. Si se desea ver el trabajo (sin terminar) en este sentido se puede consultar la rama **"tablet"**.
 
-No he querido incluir esta rama debido a que la calidad del código todavía estaba sin pulir demasiado.
+No he querido incluir esta rama debido a que la calidad del código todavía estaba sin pulir demasiado y no funcionaba todavía la gestión de pedido de una mesa.
 
 ## Flujo de funcionamiento de la aplicación
 
