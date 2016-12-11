@@ -1,6 +1,5 @@
 package info.akixe.komanda.activity;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 
 import info.akixe.komanda.fragment.ListaMesasFragment;
 import info.akixe.komanda.R;
-import info.akixe.komanda.model.Mesa;
 
 public class ListaMesasActivity extends AppCompatActivity implements ListaMesasFragment.OnMesaSelectedListener {
 

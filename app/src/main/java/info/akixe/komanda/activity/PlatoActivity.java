@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 import info.akixe.komanda.R;
 import info.akixe.komanda.model.Plato;
-import info.akixe.komanda.model.Platos;
 
 /**
  * Created by aki on 7/12/16.

@@ -13,8 +13,6 @@ import info.akixe.komanda.fragment.ListaPlatosFragment;
 import info.akixe.komanda.model.Plato;
 import info.akixe.komanda.model.Platos;
 import info.akixe.komanda.model.singleton.Menu;
-import info.akixe.komanda.model.Mesa;
-import info.akixe.komanda.model.singleton.Mesas;
 
 /**
  * Created by aki on 9/12/16.
