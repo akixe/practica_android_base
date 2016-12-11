@@ -1,5 +1,6 @@
 package info.akixe.komanda.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,28 +18,30 @@ import info.akixe.komanda.adapter.PlatosRecyclerViewAdapter;
 import info.akixe.komanda.model.Mesa;
 import info.akixe.komanda.model.Plato;
 import info.akixe.komanda.model.Platos;
+import info.akixe.komanda.model.singleton.Mesas;
 
 /**
  * Created by aki on 8/12/16.
  */
 
 public class ListaPlatosFragment extends Fragment implements PlatosRecyclerViewAdapter.OnPlatoClickListener {
+    private static final int REQUEST_PLATO = 1;
 
     private static final String ARG_PLATOS = "platos";
     private static final String ARG_MESA = "mesa";
     private static final String ARG_ROW_VIEW_TYPE = "row_view_type";
     private Platos mPlatos;
-    private Mesa mMesa;
     private RecyclerView mPlatosList;
     private int mRowViewType;
+    private int mIndiceMesa;
+    private PlatosRecyclerViewAdapter mAdapter;
 
 
-
-    public static ListaPlatosFragment newInstance(Mesa mesa, Platos platos, int rowViewType) {
+    public static ListaPlatosFragment newInstance(int indiceMesa, Platos platos, int rowViewType) {
         ListaPlatosFragment fragment = new ListaPlatosFragment();
 
         Bundle arguments = new Bundle();
-        arguments.putSerializable(ARG_MESA, mesa);
+        arguments.putInt(ARG_MESA, indiceMesa);
         arguments.putSerializable(ARG_PLATOS, platos);
         arguments.putInt(ARG_ROW_VIEW_TYPE, rowViewType);
         fragment.setArguments(arguments);
@@ -53,10 +56,12 @@ public class ListaPlatosFragment extends Fragment implements PlatosRecyclerViewA
         // Saco el modelo de los argumentos
         if (getArguments() != null) {
             mPlatos = (Platos) getArguments().getSerializable(ARG_PLATOS);
-            mMesa = (Mesa) getArguments().getSerializable(ARG_MESA);
+            mIndiceMesa = getArguments().getInt(ARG_MESA);
             mRowViewType = getArguments().getInt(ARG_ROW_VIEW_TYPE);
         }
     }
+
+
 
     @Nullable
     @Override
@@ -68,26 +73,29 @@ public class ListaPlatosFragment extends Fragment implements PlatosRecyclerViewA
         mPlatosList = (RecyclerView) root.findViewById(R.id.platos_list);
         mPlatosList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mPlatosList.setItemAnimator(new DefaultItemAnimator());
-        mPlatosList.setAdapter(new PlatosRecyclerViewAdapter(mPlatos, mMesa, getActivity(), this, mRowViewType));
-
+        refreshData();
         return root;
     }
 
     @Override
-    public void onPlatoClick(int position, Plato plato, Mesa mesa, View view) {
+    public void onPlatoClick(int position, Plato plato, int indiceMesa, View view) {
         Intent intent = new Intent(getActivity(), PlatoActivity.class);
-        Plato p;
+        Mesa mesa = Mesas.getInstance().getMesaAt(indiceMesa);
+        Plato auxPlato;
         // Si la mesa ya había pedido el plato cargamos el plato existente
         if (mesa.getPlatos().contains(plato)) {
             // Es un plato ya agregado al pedido de la mesa
-            int pos = mesa.getPosicionPlato(plato);
-            p = mesa.getPlatos().getPlato(pos);
+            auxPlato = mesa.getPlato(plato);
         } else {
             // Es un plato nuevo
-            p = plato;
+            auxPlato = plato;
         }
-        intent.putExtra(PlatoActivity.EXTRA_PLATO, p);
-        intent.putExtra(PlatoActivity.EXTRA_MESA, mesa);
-        startActivity(intent);
+        intent.putExtra(PlatoActivity.EXTRA_PLATO, auxPlato);
+        getActivity().startActivityForResult(intent, REQUEST_PLATO);
+    }
+
+    public void refreshData() {
+        mAdapter = new PlatosRecyclerViewAdapter(mPlatos, mIndiceMesa, getActivity(), this, mRowViewType);
+        mPlatosList.setAdapter(mAdapter);
     }
 }

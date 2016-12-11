@@ -50,36 +50,64 @@
                 <ImageView
                     android:id="@+id/icono_alergeno_gluten"
                     android:src="@drawable/ic_icono_alergeno_gluten"
+                    android:visibility="gone"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
                 <ImageView
                     android:id="@+id/icono_alergeno_frutos_cascara"
                     android:src="@drawable/ic_icono_alergeno_frutos_cascara"
+                    android:visibility="gone"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
                 <ImageView
                     android:id="@+id/icono_alergeno_lacteos"
                     android:src="@drawable/ic_icono_alergeno_lacteos"
+                    android:visibility="gone"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
                 <ImageView
                     android:id="@+id/icono_alergeno_huevo"
                     android:src="@drawable/ic_icono_alergeno_huevo"
+                    android:visibility="gone"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
             </LinearLayout>
-            <EditText
-                android:layout_margin="5dp"
-                android:hint="Introduzca notas para el plato seleccionado"
-                android:id="@+id/txt_notas_plato"
+            <android.support.design.widget.TextInputLayout
                 android:layout_below="@id/list_alergenos"
+                android:id="@+id/input_layout_cantidad"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <NumberPicker
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txt_cantidad"
+                    android:inputType="number"
+                    android:hint="Cantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_below="@id/input_layout_cantidad"
+                android:id="@+id/input_layout_notas_plato"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_margin="5dp"
+                    android:hint="Notas"
+                    android:id="@+id/txt_notas_plato"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </android.support.design.widget.TextInputLayout>
+
+
+
+
+            <!--NumberPicker
                 android:id="@+id/number_cantidad"
                 android:layout_below="@id/txt_notas_plato"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></NumberPicker>
+                android:layout_height="wrap_content"></NumberPicker-->
         </RelativeLayout>
 
 

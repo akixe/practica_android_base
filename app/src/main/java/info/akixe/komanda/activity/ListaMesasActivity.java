@@ -18,14 +18,18 @@ public class ListaMesasActivity extends AppCompatActivity implements ListaMesasF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_mesas);
 
-
+        // =======
+        // Toolbar
+        // =======
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Mesas");
 
-        FragmentManager fm = getFragmentManager();
 
-        Fragment listaMesasFragment = new ListaMesasFragment();
+        // ===========
+        // Lista Mesas
+        // ===========
+        FragmentManager fm = getFragmentManager();
         if (fm.findFragmentById(R.id.fragment_mesas_list) == null) {
             fm.beginTransaction()
                     .add(R.id.fragment_mesas_list, new ListaMesasFragment())
@@ -34,9 +38,11 @@ public class ListaMesasActivity extends AppCompatActivity implements ListaMesasF
     }
 
     @Override
-    public void onMesaSelected(Mesa mesa) {
+    public void onMesaSelected(int indiceMesa) {
+        // Han seleccionado una mesa
+        //   Activamos
         Intent intent = new Intent(this, ListaPlatosMesaActivity.class);
-        intent.putExtra(ListaPlatosMesaActivity.EXTRA_MESA, mesa);
+        intent.putExtra(ListaPlatosMesaActivity.EXTRA_MESA, indiceMesa);
         startActivity(intent);
     }
 }

@@ -3,4 +3,6 @@
     <string name="add">Añadir</string>
     <string name="title_anade_plato">Añade un plato</string>
     <string name="save_plato">Guardar</string>
+    <string name="sin_notas">Sin Notas</string>
+    <string name="pedido">"Pedido "</string>
 </resources>

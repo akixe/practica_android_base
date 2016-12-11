@@ -46,24 +46,35 @@ public class Mesa implements Serializable {
         this.mPlatos = platos;
     }
 
-
-
-
     public void addPlato(Plato plato) {
-        mPlatos.addPlato(plato);
-    }
-
-    public int getPosicionPlato(Plato plato) {
         if (mPlatos.contains(plato)){
-            return mPlatos.getPosicionPlato(plato);
+            mPlatos.updatePlato(plato);
         } else {
-            return -1;
+            mPlatos.addPlato(plato);
         }
-
+    }
+    public Plato getPlato(Plato plato) {
+        if (mPlatos.contains(plato)) {
+            return mPlatos.getPlato(mPlatos.getPosicionPlato(plato));
+        } else {
+            return null;
+        }
     }
 
+    //============
+    // OVERRIDES
+    //============
     @Override
     public String toString() {
         return this.getNombre();
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Mesa &&
+                mNombre.equals(((Mesa)obj).mNombre);
+
+    }
+
 }

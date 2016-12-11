@@ -9,10 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import info.akixe.komanda.R;
-import info.akixe.komanda.model.Mesa;
 import info.akixe.komanda.model.Plato;
 import info.akixe.komanda.model.Platos;
 
@@ -22,18 +21,17 @@ import info.akixe.komanda.model.Platos;
 
 public class PlatosRecyclerViewAdapter extends RecyclerView.Adapter<PlatosRecyclerViewAdapter.PlatoViewHolder> {
     private final Platos mPlatos;
-    private final Mesa mMesa;
     private final Context mContext;
+    private final int mIndiceMesa;
     private OnPlatoClickListener mOnPlatoClickListener;
     private int mRowViewType = R.layout.row_view_plato_pedido;
 
 
-    public PlatosRecyclerViewAdapter(Platos platos, Mesa mesa, Context context, OnPlatoClickListener onPlatoClickListener, int rowViewType) {
+    public PlatosRecyclerViewAdapter(Platos platos, int indiceMesa, Context context, OnPlatoClickListener onPlatoClickListener, int rowViewType) {
         super();
-
         mRowViewType = rowViewType;
         mPlatos = platos;
-        mMesa = mesa;
+        mIndiceMesa = indiceMesa;
         mContext = context;
         mOnPlatoClickListener = onPlatoClickListener;
     }
@@ -51,7 +49,7 @@ public class PlatosRecyclerViewAdapter extends RecyclerView.Adapter<PlatosRecycl
             @Override
             public void onClick(View view) {
                 if (mOnPlatoClickListener != null) {
-                    mOnPlatoClickListener.onPlatoClick(position, mPlatos.getPlato(position), mMesa, view);
+                    mOnPlatoClickListener.onPlatoClick(position, mPlatos.getPlato(position), mIndiceMesa, view);
                 }
             }
         });
@@ -78,8 +76,6 @@ public class PlatosRecyclerViewAdapter extends RecyclerView.Adapter<PlatosRecycl
         private View mView;
         public PlatoViewHolder(View itemView) {
             super(itemView);
-
-
             mView = itemView;
 
             // rellenar las vistas
@@ -103,32 +99,80 @@ public class PlatosRecyclerViewAdapter extends RecyclerView.Adapter<PlatosRecycl
             mNombre.setText(plato.getNombre());
 
             // Algunas vistas de la lista de platos no muestran las notas
-            if (mNotas != null){
-                mNotas.setText(plato.getNotas());
+            if (mNotas != null) {
+                if (plato.getNotas().toString().isEmpty()) {
+                    mNotas.setText(R.string.sin_notas);
+                } else {
+                    mNotas.setText(plato.getNotas());
+                }
+
             }
 
             if (mCantidad != null) {
                 mCantidad.setText(Integer.toString(plato.getCantidad()));
             }
 
-            if (mPrecio != null){
-                NumberFormat format = NumberFormat.getCurrencyInstance();
-                mPrecio.setText(format.format(plato.getPrecioTotal()));
+            if (mPrecio != null) {
+                NumberFormat formater = NumberFormat.getCurrencyInstance();
+                mPrecio.setText(formater.format(plato.getPrecioTotal()));
             }
 
+            int indiceImagen = plato.getIndiceImagen();
+            int imageResource;
+            switch (indiceImagen) {
+                case 1:
+                    imageResource = R.drawable.barra_crema;
+                    break;
+                case 2:
+                    imageResource = R.drawable.brownnie;
+                    break;
+                case 3:
+                    imageResource = R.drawable.chocolate_cupcake;
+                    break;
+                case 4:
+                    imageResource = R.drawable.cupcakes;
+                    break;
+                case 5:
+                    imageResource = R.drawable.cream_puffs;
+                    break;
+                default:
+                    imageResource = R.drawable.no_foto;
+                    break;
+            }
+            mImagen.setImageResource(imageResource);
 
-            // TODO: 7/12/16 Añadir imagen a Plato
-            // TODO: 7/12/16 comprobar si tiene o no un alérgeno para convertir el icono a gris o dejarlo en color
+            // Iconos de Alérgenos
+            ArrayList<Integer> alergenos = plato.getAlergenos();
+            if (mAlergenoGluten != null && mAlergenoCascara != null && mAlergenoLacteos != null && mAlergenoHuevo != null){
+                if (alergenos.contains(0)) {
+                    mAlergenoGluten.setVisibility(View.VISIBLE);
+                } else {
+                    mAlergenoGluten.setVisibility(View.GONE);
+                }
+                if (alergenos.contains(1)) {
+                    mAlergenoCascara.setVisibility(View.VISIBLE);
+                } else {
+                    mAlergenoCascara.setVisibility(View.GONE);
+                }
+                if (alergenos.contains(2)) {
+                    mAlergenoLacteos.setVisibility(View.VISIBLE);
+                } else {
+                    mAlergenoLacteos.setVisibility(View.GONE);
+                }
+                if (alergenos.contains(3)) {
+                    mAlergenoHuevo.setVisibility(View.VISIBLE);
+                } else {
+                    mAlergenoHuevo.setVisibility(View.GONE);
+                }
+            }
         }
-
         public View getView() {
             return mView;
         }
     }
 
     public interface OnPlatoClickListener {
-        public void onPlatoClick(int position, Plato plato, Mesa mesa, View view);
+        public void onPlatoClick(int position, Plato plato, int mIndiceMesa, View view);
     }
-
 
 }

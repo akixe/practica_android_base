@@ -60,6 +60,14 @@ public class Platos implements Serializable {
         return mPlatos.indexOf(plato);
     }
 
+    public void updatePlato(Plato plato) {
+        int indicePlato = mPlatos.indexOf(plato);
+        mPlatos.set(indicePlato, plato);
+    }
+
+
+
+
 
 
 }

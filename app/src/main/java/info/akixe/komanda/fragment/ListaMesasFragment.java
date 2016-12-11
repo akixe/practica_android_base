@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import info.akixe.komanda.R;
-import info.akixe.komanda.model.Alergeno;
 import info.akixe.komanda.model.Mesa;
 import info.akixe.komanda.model.singleton.Mesas;
 import info.akixe.komanda.model.Plato;
@@ -36,6 +35,9 @@ import info.akixe.komanda.model.singleton.Menu;
 /**
  * Created by aki on 3/12/16.
  */
+
+
+// TODO: 11/12/16 Extraer task descarga asíncrona a clase externa
 
 public class ListaMesasFragment extends Fragment {
 
@@ -47,6 +49,13 @@ public class ListaMesasFragment extends Fragment {
     private static final int LOADING_VIEW_INDEX = 0;
     private static final int MESAS_VIEW_INDEX = 1;
     private Menu mMenu;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Mesas a = Mesas.getInstance();
+    }
 
     @Nullable
     @Override
@@ -73,7 +82,7 @@ public class ListaMesasFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Avisamos al listener que el usuario ha pulsado una fila
                 if (mOnMesaSelectedListener != null) {
-                    mOnMesaSelectedListener.onMesaSelected(mMesas.getMesaAt(position));
+                    mOnMesaSelectedListener.onMesaSelected(position);
                 }
             }
         });
@@ -113,7 +122,7 @@ public class ListaMesasFragment extends Fragment {
     }
 
     public interface OnMesaSelectedListener {
-        void onMesaSelected(Mesa mesa);
+        void onMesaSelected(int indiceMesa);
     }
 
 
@@ -228,9 +237,25 @@ public class ListaMesasFragment extends Fragment {
             LinkedList<Plato> listaPlatos = new LinkedList<>();
 
             for (int i = 0; i < jsonPlatos.length(); i++) {
-                JSONObject p = jsonPlatos.getJSONObject(i);
-                String nombre = p.getString("nombre");
-                listaPlatos.add(new Plato(nombre, "", false, new ArrayList<Alergeno>(), 0.0f));
+                JSONObject plato = jsonPlatos.getJSONObject(i);
+
+                // Nombre
+                String nombre = plato.getString("nombre");
+
+                // Indice de Imagen
+                int indiceImagen = plato.getInt("imagen");
+
+                // Alergenos
+                ArrayList<Integer> alergenos = new ArrayList<Integer>();
+                JSONArray jsonAlergenos = plato.getJSONArray("alergenos");
+                for(int j = 0; j < jsonAlergenos.length(); j++) {
+                    alergenos.add(jsonAlergenos.getInt(j));
+                }
+
+                // Precio
+                float precio = (float)plato.getDouble("precio");
+
+                listaPlatos.add(new Plato(nombre, "", false, alergenos, precio, indiceImagen));
             }
             return listaPlatos;
         } catch (JSONException e) {

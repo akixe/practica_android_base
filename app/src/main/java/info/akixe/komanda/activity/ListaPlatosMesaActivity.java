@@ -1,5 +1,6 @@
 package info.akixe.komanda.activity;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.view.View;
 import info.akixe.komanda.R;
 import info.akixe.komanda.fragment.ListaPlatosFragment;
 import info.akixe.komanda.model.Mesa;
+import info.akixe.komanda.model.Plato;
+import info.akixe.komanda.model.singleton.Mesas;
 
 /**
  * Created by aki on 4/12/16.
@@ -19,28 +22,40 @@ import info.akixe.komanda.model.Mesa;
 
 public class ListaPlatosMesaActivity extends AppCompatActivity  {
 
+    private static final int REQUEST_PLATO = 1;
     public static final String EXTRA_MESA = "EXTRA_MESA";
     private Mesa mMesa;
+    private ListaPlatosFragment mListaPlatosView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_platos_mesa);
 
+        // =======
+        // Toolbar
+        // =======
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // ======
+        // Modelo
+        // =======
+        int indiceMesa = getIntent().getIntExtra(EXTRA_MESA, 0);
+        mMesa = Mesas.getInstance().getMesaAt(indiceMesa);
+        getSupportActionBar().setTitle(getString(R.string.pedido) + mMesa.getNombre());
+
+        // =================
+        // Lista Platos Menú
+        // =================
         FragmentManager fm = getFragmentManager();
-
         if (findViewById(R.id.fragment_plato_list) != null) {
-
-            mMesa = (Mesa) getIntent().getSerializableExtra(EXTRA_MESA);
-
-            // Metemos la lista de platos de la mesa
+            // Guardamor refrencia a la vista de lista de platos para poder refrescar en el futuro
+            mListaPlatosView = ListaPlatosFragment.newInstance(indiceMesa, Mesas.getInstance().getMesaAt(indiceMesa).getPlatos(), R.layout.row_view_plato_pedido);// Metemos la lista de platos de la mesa
             if (fm.findFragmentById(R.id.fragment_plato_list) == null) {
                 fm.beginTransaction()
-                        .add(R.id.fragment_plato_list, ListaPlatosFragment.newInstance(mMesa, mMesa.getPlatos(), R.layout.row_view_plato_pedido))
+                        .add(R.id.fragment_plato_list, mListaPlatosView)
                         .commit();
             }
         }
@@ -49,11 +64,25 @@ public class ListaPlatosMesaActivity extends AppCompatActivity  {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ListaPlatosActivity.class);
-                intent.putExtra(ListaPlatosActivity.EXTRA_MESA, mMesa);
-                startActivity(intent);
+                Intent intent = new Intent(view.getContext(), ListaPlatosMenuActivity.class);
+                intent.putExtra(ListaPlatosMenuActivity.EXTRA_MESA, mMesa);
+                startActivityForResult(intent, REQUEST_PLATO);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_PLATO && resultCode == Activity.RESULT_OK) {
+            // Nos devuelven un plato (modificado o nuevo)
+            //    a) Lo cargamos a la lista de platos de la mesa
+            //    b) Refrescamos la vista de la lista de platos
+            Plato plato = (Plato) data.getSerializableExtra(PlatoActivity.EXTRA_PLATO);
+            mMesa.addPlato(plato);
+            mListaPlatosView.refreshData();
+        }
     }
 
 

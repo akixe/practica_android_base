@@ -31,4 +31,9 @@ public class Mesas {
     public Mesa getMesaAt(int position) {
         return mMesas.get(position);
     }
+
+    public void updateMesa (Mesa mesa) {
+        int indice = mMesas.indexOf(mesa);
+        mMesas.set(indice, mesa);
+    }
 }
