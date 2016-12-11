@@ -37,13 +37,8 @@ public class Platos implements Serializable {
 
     public void addPlato(Plato plato) {
         if (mPlatos.contains(plato)) {
-            int position = mPlatos.indexOf(plato);
-
-            Plato old_plato = mPlatos.get(position);
-            old_plato.setNotas(plato.getNotas());
-            old_plato.setCantidad(plato.getCantidad());
-
-        } else {
+            updatePlato(plato);
+        } else if (plato.getCantidad() > 0) {
             mPlatos.add(plato);
         }
     }
@@ -62,7 +57,11 @@ public class Platos implements Serializable {
 
     public void updatePlato(Plato plato) {
         int indicePlato = mPlatos.indexOf(plato);
-        mPlatos.set(indicePlato, plato);
+        if (plato.getCantidad() == 0) {
+            mPlatos.remove(plato);
+        } else {
+            mPlatos.set(indicePlato, plato);
+        }
     }
 
 

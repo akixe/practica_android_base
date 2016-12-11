@@ -1,7 +1,9 @@
 package info.akixe.komanda.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,7 +44,7 @@ public class ListaPlatosMesaActivity extends AppCompatActivity  {
         // ======
         // Modelo
         // =======
-        int indiceMesa = getIntent().getIntExtra(EXTRA_MESA, 0);
+        final int indiceMesa = getIntent().getIntExtra(EXTRA_MESA, 0);
         mMesa = Mesas.getInstance().getMesaAt(indiceMesa);
         getSupportActionBar().setTitle(getString(R.string.pedido) + mMesa.getNombre());
 
@@ -65,8 +67,27 @@ public class ListaPlatosMesaActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ListaPlatosMenuActivity.class);
-                intent.putExtra(ListaPlatosMenuActivity.EXTRA_MESA, mMesa);
+                intent.putExtra(ListaPlatosMenuActivity.EXTRA_MESA, indiceMesa);
                 startActivityForResult(intent, REQUEST_PLATO);
+            }
+        });
+
+        FloatingActionButton cuentaButton = (FloatingActionButton) findViewById(R.id.cuenta_button);
+        cuentaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
+                alertDialog.setTitle("La cuenta");
+                alertDialog.setMessage("El total es XXXX");
+                alertDialog.setPositiveButton("Cerrar cuenta", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mMesa.cerrarCuenta();
+                        finish();
+                    }
+                });
+
+                alertDialog.show();
             }
         });
     }

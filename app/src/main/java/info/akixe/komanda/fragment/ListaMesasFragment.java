@@ -49,13 +49,8 @@ public class ListaMesasFragment extends Fragment {
     private static final int LOADING_VIEW_INDEX = 0;
     private static final int MESAS_VIEW_INDEX = 1;
     private Menu mMenu;
+    private ArrayAdapter<Mesa> mAdapter;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        Mesas a = Mesas.getInstance();
-    }
 
     @Nullable
     @Override
@@ -91,6 +86,19 @@ public class ListaMesasFragment extends Fragment {
         return root;
     }
 
+
+    public void refreshData() {
+        if (mMesas != null) {
+            if (mMesas.getMesas() != null){
+                mAdapter = new ArrayAdapter<Mesa>(
+                        getActivity(), android.R.layout.simple_list_item_1,
+                        mMesas.getMesas());
+
+                mListView.setAdapter(mAdapter);
+            }
+        }
+
+    }
 
     //=========================
     // ON_MESA_SELECED_LISTENER
@@ -273,11 +281,7 @@ public class ListaMesasFragment extends Fragment {
                 mMesas.setMesas(mesas);
                 mMenu.setPlatos(menu);
 
-                ArrayAdapter<Mesa> adapter = new ArrayAdapter<Mesa>(
-                        getActivity(), android.R.layout.simple_list_item_1,
-                        mMesas.getMesas());
-
-                mListView.setAdapter(adapter);
+                refreshData();
             }
 
     }

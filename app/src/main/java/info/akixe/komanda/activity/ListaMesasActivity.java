@@ -13,6 +13,8 @@ import info.akixe.komanda.model.Mesa;
 
 public class ListaMesasActivity extends AppCompatActivity implements ListaMesasFragment.OnMesaSelectedListener {
 
+    private ListaMesasFragment mListaMesasView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +32,13 @@ public class ListaMesasActivity extends AppCompatActivity implements ListaMesasF
         // Lista Mesas
         // ===========
         FragmentManager fm = getFragmentManager();
+        mListaMesasView = new ListaMesasFragment();
         if (fm.findFragmentById(R.id.fragment_mesas_list) == null) {
             fm.beginTransaction()
-                    .add(R.id.fragment_mesas_list, new ListaMesasFragment())
+                    .add(R.id.fragment_mesas_list, mListaMesasView)
                     .commit();
         }
+
     }
 
     @Override
@@ -43,6 +47,12 @@ public class ListaMesasActivity extends AppCompatActivity implements ListaMesasF
         //   Activamos
         Intent intent = new Intent(this, ListaPlatosMesaActivity.class);
         intent.putExtra(ListaPlatosMesaActivity.EXTRA_MESA, indiceMesa);
-        startActivity(intent);
+            startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mListaMesasView.refreshData();
     }
 }

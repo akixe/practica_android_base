@@ -1,5 +1,7 @@
 package info.akixe.komanda.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -129,6 +131,39 @@ public class PlatoActivity extends AppCompatActivity {
             returnIntent.putExtra(EXTRA_PLATO, mPlato);
             setResult(RESULT_OK, returnIntent);
             finish();
+        } else if (item.getItemId() == R.id.remove_plato) {
+            //========
+            // Quitar
+            //========
+            final Intent returnIntent = new Intent(this, ListaPlatosMesaActivity.class);
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Quitar plato");
+            alertDialog.setMessage("¿Desea quitar el plato?");
+            alertDialog.setPositiveButton("Proceder", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    mPlato.setCantidad(0);
+                    // Devolvemos el plato
+
+                    returnIntent.putExtra(EXTRA_PLATO, mPlato);
+                    setResult(RESULT_OK, returnIntent);
+
+                    finish();
+                }
+            });
+
+            alertDialog.setNegativeButton("Descartar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    finish();
+                }
+            });
+
+            alertDialog.show();
+
+
         }
 
         return res;

@@ -5,4 +5,5 @@
     <string name="save_plato">Guardar</string>
     <string name="sin_notas">Sin Notas</string>
     <string name="pedido">"Pedido "</string>
+    <string name="remove_plato">Quitar</string>
 </resources>

@@ -52,6 +52,11 @@ public class Mesa implements Serializable {
         } else {
             mPlatos.addPlato(plato);
         }
+
+        // Si hay más de un plato la asignado la mesa estará ocupada
+        if (mPlatos.size() > 0) {
+            mOcupada = true;
+        }
     }
     public Plato getPlato(Plato plato) {
         if (mPlatos.contains(plato)) {
@@ -61,12 +66,24 @@ public class Mesa implements Serializable {
         }
     }
 
+    public void cerrarCuenta() {
+        mPlatos.getPlatos().clear();
+        mOcupada = false;
+    }
+
     //============
     // OVERRIDES
     //============
     @Override
     public String toString() {
-        return this.getNombre();
+        //// TODO: 11/12/16 Mesa ocupada en texto: mostrar icono en vista de mesas
+        String ocupada = "";
+        if (mOcupada) {
+            ocupada = " [Ocupada]";
+        } else {
+            ocupada = " [Libre]";
+        }
+        return this.getNombre() + ocupada;
     }
 
 
