@@ -64,6 +64,14 @@ public class Platos implements Serializable {
         }
     }
 
+    public float getSumaPlatos() {
+        float suma = 0f;
+        for(int i = 0; i < mPlatos.size();i++){
+            suma = suma + mPlatos.get(i).getPrecioTotal();
+        }
+        return suma;
+    }
+
 
 
 

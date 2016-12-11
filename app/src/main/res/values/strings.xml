@@ -6,4 +6,8 @@
     <string name="sin_notas">Sin Notas</string>
     <string name="pedido">"Pedido "</string>
     <string name="remove_plato">Quitar</string>
+    <string name="la_cuenta">La cuenta</string>
+    <string name="cuenta_total_label">El total de la cuenta es:</string>
+    <string name="cerrar_cuenta">Cerrar cuenta</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

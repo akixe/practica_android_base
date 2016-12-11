@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import info.akixe.komanda.R;
 import info.akixe.komanda.fragment.ListaPlatosFragment;
 import info.akixe.komanda.model.Mesa;
@@ -77,13 +80,25 @@ public class ListaPlatosMesaActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
-                alertDialog.setTitle("La cuenta");
-                alertDialog.setMessage("El total es XXXX");
-                alertDialog.setPositiveButton("Cerrar cuenta", new DialogInterface.OnClickListener() {
+                alertDialog.setTitle(R.string.la_cuenta);
+
+                NumberFormat formater = NumberFormat.getCurrencyInstance(new Locale("es", "ES"));
+                String total =  formater.format(mMesa.getCuentaMesa());
+
+                alertDialog.setMessage(getString(R.string.cuenta_total_label) + " " + total);
+
+                alertDialog.setPositiveButton(R.string.cerrar_cuenta, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         mMesa.cerrarCuenta();
                         finish();
+                    }
+                });
+
+                alertDialog.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
                     }
                 });
 

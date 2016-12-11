@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import info.akixe.komanda.R;
 import info.akixe.komanda.model.Plato;
@@ -113,7 +114,7 @@ public class PlatosRecyclerViewAdapter extends RecyclerView.Adapter<PlatosRecycl
             }
 
             if (mPrecio != null) {
-                NumberFormat formater = NumberFormat.getCurrencyInstance();
+                NumberFormat formater = NumberFormat.getCurrencyInstance(new Locale("es", "ES"));
                 mPrecio.setText(formater.format(plato.getPrecioTotal()));
             }
 

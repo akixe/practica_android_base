@@ -71,6 +71,10 @@ public class Mesa implements Serializable {
         mOcupada = false;
     }
 
+    public float getCuentaMesa() {
+        return mPlatos.getSumaPlatos();
+    }
+
     //============
     // OVERRIDES
     //============
