@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/remove_plato" android:title="Añadir Plato" app:showAsAction="ifRoom" />
+    <item android:id="@+id/save_plato" android:title="Cerrar cuenta" app:showAsAction="ifRoom" />
+
+</menu>

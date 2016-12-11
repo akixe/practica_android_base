@@ -8,7 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,7 +36,7 @@ public class ListaPlatosFragment extends Fragment implements PlatosRecyclerViewA
     private Platos mPlatos;
     private RecyclerView mPlatosList;
     private int mRowViewType;
-    private int mIndiceMesa;
+    private int mIndiceMesa = -1;
     private PlatosRecyclerViewAdapter mAdapter;
 
 
@@ -52,6 +55,12 @@ public class ListaPlatosFragment extends Fragment implements PlatosRecyclerViewA
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int dpWidth = (int) (width / metrics.density);
+        if (dpWidth >= 400) {
+            setHasOptionsMenu(true);
+        }
 
         // Saco el modelo de los argumentos
         if (getArguments() != null) {
@@ -95,7 +104,23 @@ public class ListaPlatosFragment extends Fragment implements PlatosRecyclerViewA
     }
 
     public void refreshData() {
-        mAdapter = new PlatosRecyclerViewAdapter(mPlatos, mIndiceMesa, getActivity(), this, mRowViewType);
-        mPlatosList.setAdapter(mAdapter);
+        if (mPlatos != null && mIndiceMesa != -1) {
+            mAdapter = new PlatosRecyclerViewAdapter(mPlatos, mIndiceMesa, getActivity(), this, mRowViewType);
+            mPlatosList.setAdapter(mAdapter);
+        }
     }
+
+    public void refreshData(Platos platos, int indiceMesa) {
+        mPlatos = platos;
+        mIndiceMesa = indiceMesa;
+        refreshData();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            super.onCreateOptionsMenu(menu, inflater);
+            inflater.inflate(R.menu.menu_principal_wide, menu);
+    }
+
+
 }
